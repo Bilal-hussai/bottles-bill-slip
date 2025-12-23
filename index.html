@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Warehouse Slip</title>
+
+<style>
+/* ---------- basic body ---------- */
+body{
+  margin:0;
+  padding:8px;
+  background:#f2f2f2;
+  font-family:Arial, Helvetica, sans-serif;
+}
+
+/* ---------- slip container ---------- */
+.slip{
+  width:300px;           /* narrow receipt style */
+  margin:auto;
+  background:#fff;
+  padding:14px 12px 18px;
+  box-sizing:border-box;
+}
+
+/* ---------- text helpers ---------- */
+.center{text-align:center;}
+.bold{font-weight:700;}
+.small{font-size:12px;}
+.normal{font-size:16px;}
+.lg{font-size:16px;}
+.xl{font-size:18px;}
+.line{
+  border-top:1px dashed #000;
+  margin:8px 0;
+}
+
+/* ---------- input styles ---------- */
+input{
+  width:100%;
+  border:none;
+  border-bottom:1px dashed #000;
+  font-size:16px;
+  padding:6px 0;
+  outline:none;
+  box-sizing:border-box;
+}
+
+/* ---------- rows ---------- */
+.row{
+  display:flex;
+  justify-content:space-between;
+  font-size:16px;
+  margin:4px 0;
+}
+
+/* ---------- totals ---------- */
+.total{
+  font-size:18px;
+  font-weight:700;
+  margin-top:4px;
+}
+
+/* ---------- print button ---------- */
+.print-btn{
+  margin-top:12px;
+  width:100%;
+  background:#000;
+  color:#fff;
+  border:none;
+  padding:10px;
+  cursor:pointer;
+  font-size:14px;
+}
+
+/* ---------- print adjustments ---------- */
+@media print{
+  body{background:#fff;padding:0;}
+  .print-btn{display:none;}
+  .slip{width:100%;padding:0;margin:0;}
+}
+</style>
+</head>
+
+<body>
+
+<div class="slip">
+
+  <!-- supplier name -->
+  <div class="center bold lg" style="margin-bottom:4px;">
+    <input placeholder="Supplier Name" style="text-align:center;font-size:16px;font-weight:700;">
+  </div>
+
+  <!-- default note -->
+  <div class="center small" style="line-height:1.3;">
+    These bottles were delivered to<br>
+    <strong>HAQ’s Warehouse</strong>
+  </div>
+
+  <div class="line"></div>
+
+  <!-- date -->
+  <div class="row small">
+    <span>Date</span>
+    <input type="date" style="border:none;font-size:12px;text-align:right;">
+  </div>
+
+  <div class="line"></div>
+
+  <!-- price -->
+  <label class="small">Price per Bottle (Rs)</label>
+  <input type="number" id="price" placeholder="0.00" oninput="calc()">
+
+  <!-- qty -->
+  <label class="small" style="margin-top:6px;">Quantity</label>
+  <input type="number" id="qty" placeholder="0" oninput="calc()">
+
+  <div class="line"></div>
+
+  <!-- subtotal -->
+  <div class="row normal">
+    <span>Price × Qty</span>
+    <span>Rs <span id="subtotal">0.00</span></span>
+  </div>
+
+  <div class="line"></div>
+
+  <!-- total -->
+  <div class="row total">
+    <span>TOTAL</span>
+    <span>Rs <span id="total">0.00</span></span>
+  </div>
+
+  <div class="line"></div>
+
+  <!-- SIGN -->
+<div class="row small" style="margin-top:18px;">
+  <div style="width:48%;">
+    Checked By
+    <div style="border-top:1px solid #000;margin-top:16px;"></div>
+  </div>
+  <div style="width:48%; text-align:right;">
+    Received By
+    <div style="border-top:1px solid #000;margin-top:16px;"></div>
+  </div>
+</div>
+
+  <!-- print -->
+  <button class="print-btn" onclick="window.print()">🖨 Print Slip</button>
+
+</div>
+
+<script>
+function calc(){
+  let p = parseFloat(price.value) || 0;
+  let q = parseFloat(qty.value) || 0;
+  let t = p * q;
+  subtotal.innerText = t.toFixed(2);
+  total.innerText = t.toFixed(2);
+}
+</script>
+
+</body>
+</html>
